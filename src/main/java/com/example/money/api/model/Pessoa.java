@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "pessoa")
@@ -19,6 +20,7 @@ public class Pessoa {
 	private Long codigo;
 	
 	@NotNull
+	@Size(min = 5, max = 80)
 	private String nome;
 	
 	@Embedded
