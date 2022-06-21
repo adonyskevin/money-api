@@ -1,7 +1,5 @@
 package com.example.money.api.service;
 
-import java.util.Optional;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -18,13 +16,26 @@ public class PessoaService {
 	
 	public Pessoa atualizarPessoa(Long codigo, Pessoa pessoa){
 		
-		Optional<Pessoa> pessoaSalva = pessoaRepository.findById(codigo);
+		Pessoa pessoaSalva = buscarPorCodigo(codigo);
 		
-		if(pessoaSalva.isEmpty()) {
+		BeanUtils.copyProperties(pessoa, pessoaSalva, "codigo");
+		return pessoaRepository.save(pessoaSalva);
+	}
+
+	public void atualizarPropriedadeAtivo(Long codigo, Boolean ativo) {
+		Pessoa pessoa = buscarPorCodigo(codigo);
+		
+		pessoa.setAtivo(ativo);
+		pessoaRepository.save(pessoa);
+	}
+	
+	private Pessoa buscarPorCodigo(Long codigo) {
+		Pessoa pessoa = !pessoaRepository.findById(codigo).isEmpty() 
+				? pessoaRepository.findById(codigo).get() : null;
+		
+		if(pessoa == null) {
 			throw new EmptyResultDataAccessException(1);
 		}
-		
-		BeanUtils.copyProperties(pessoa, pessoaSalva.get(), "codigo");
-		return pessoaRepository.save(pessoaSalva.get());
+		return pessoa;
 	}
 }
