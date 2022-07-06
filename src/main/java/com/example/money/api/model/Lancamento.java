@@ -38,17 +38,21 @@ public class Lancamento {
 	@Column(name = "data_pagamento")
 	private LocalDate dataPagamento;
 	
+	@NotNull
 	private BigDecimal valor;
 	
 	private String observacao;
 	
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	private TipoLancamento tipo;
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "codigo_categoria")
 	private Categoria categoria;
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "codigo_pessoa")
 	private Pessoa pessoa;

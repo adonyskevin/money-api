@@ -29,7 +29,7 @@ public class PessoaService {
 		pessoaRepository.save(pessoa);
 	}
 	
-	private Pessoa buscarPorCodigo(Long codigo) {
+	public Pessoa buscarPorCodigo(Long codigo) {
 		Pessoa pessoa = !pessoaRepository.findById(codigo).isEmpty() 
 				? pessoaRepository.findById(codigo).get() : null;
 		
